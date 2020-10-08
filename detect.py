@@ -2,11 +2,12 @@ import cv2
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-# img = cv2.imread('teens.jpg')
-cap = cv2.V
+
+cap = cv2.VideoCapture
 
 while True:
-    _, img = cap.read()
+    img = cv2.imread('teens.jpg')
+   # _, img = cap.read()
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
