@@ -20,8 +20,8 @@ class Detect:
             num_of_faces = num_of_faces + 1
             cv2.rectangle(Detect.img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-        #cv2.imshow('img', img)
-        #cv2.waitKey(0)
+        cv2.imshow('img', Detect.img)
+        cv2.waitKey(0)
 
         print("Number of faces found: " + str(num_of_faces))
 
