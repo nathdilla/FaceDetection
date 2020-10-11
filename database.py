@@ -39,3 +39,13 @@ class Database:
         mycursor.execute(Database.sqlFormula, newuser)
         Database.mydb.commit()
         return True
+
+    def get_classroom_data(self, classroomID):
+        mycursor = Database.mydb.cursor()
+        sql = "SELECT username, isActive FROM users WHERE classroomId = %s"
+        mycursor.execute(sql, (classroomID,))
+        myresult = mycursor.fetchall()
+
+        print("***********************")
+        for user in myresult:
+            print(user)

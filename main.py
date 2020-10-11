@@ -1,4 +1,6 @@
 import sys
+import time
+import thread
 
 sys.path.append(".")
 
@@ -50,7 +52,20 @@ def begin():
         classroomId = raw_input("Please enter a classroom code: ")
         connection = Database()
         connection.create_new_userconnection(username, classroomId, 1)
-        print("Number of students")##loop check for students
+        is_connected = True
+
+        def update_loop(threadName, delay):
+            while is_connected:
+                connection.get_classroom_data(classroomId)
+                time.sleep(delay)
+
+            print("loop closed")
+
+        thread.start_new_thread(update_loop, ("Thread-1", 1, ))
+
+        if raw_input("Enter 'disconnect' to end session"):
+            is_connected = False
+            print("disconnected")
 
 
 begin()
