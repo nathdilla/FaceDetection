@@ -8,7 +8,7 @@ class Database:
 
     def __init__(self):
         Database.mydb = mysql.connector.connect(
-            host="localhost",
+            host="127.0.0.1",
             user="root",
             passwd="somesecurepassword",
             database="meetings"
@@ -49,3 +49,15 @@ class Database:
         print("***********************")
         for user in myresult:
             print(user)
+
+    def end_classroom(self, classroomID):
+        mycursor = Database.mydb.cursor()
+        sql = "DELETE FROM users WHERE classroomID = %s"
+        mycursor.execute(sql, (classroomID,))
+        Database.mydb.commit()
+
+    def leave_classroom(self, username):
+        mycursor = Database.mydb.cursor()
+        sql = "DELETE FROM users WHERE username = %s"
+        mycursor.execute(sql, (username,))
+        Database.mydb.commit()

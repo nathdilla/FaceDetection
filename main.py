@@ -48,6 +48,9 @@ def begin():
 
         #face_detect = Detect(username).scan_image() #run this loop
         ##then sendDataToTeachers()
+        if raw_input("Enter 'disconnect' to end session"):
+            print("disconnected")
+            connection.leave_classroom(username)
     else:
         classroomId = raw_input("Please enter a classroom code: ")
         connection = Database()
@@ -66,6 +69,7 @@ def begin():
         if raw_input("Enter 'disconnect' to end session"):
             is_connected = False
             print("disconnected")
+            connection.end_classroom(classroomId)
 
 
 begin()
