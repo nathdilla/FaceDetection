@@ -5,8 +5,9 @@ class Database:
     meetingID = None
     mydb = None
     sqlFormula = "INSERT INTO users (username, classroomID, isActive, isTeacher) VALUES (%s, %s, %s, %s)" # user creation format
+    username = ""
 
-    def __init__(self):
+    def __init__(self, username):
         Database.mydb = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
@@ -15,6 +16,7 @@ class Database:
         )
 
         print(Database.mydb)
+        Database.username = username
         return
 
     def create_new_userconnection(self, username, code, isteacher):
@@ -61,3 +63,7 @@ class Database:
         sql = "DELETE FROM users WHERE username = %s"
         mycursor.execute(sql, (username,))
         Database.mydb.commit()
+
+    def active_status(self, status):
+        return
+                #  set username status to status

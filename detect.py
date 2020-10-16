@@ -1,4 +1,6 @@
 import cv2
+import thread
+import time
 
 
 class Detect:
@@ -7,23 +9,41 @@ class Detect:
 
     username = None
 
+    isActive = False
+    connected = False
+
     def __init__(self, username):
         Detect.username = username
+        Detect.connected = True
         return
 
-    @staticmethod
-    def scan_image():
-        num_of_faces = 0
-        gray = cv2.cvtColor(Detect.img, cv2.COLOR_BGR2GRAY)
-        faces = Detect.face_cascade.detectMultiScale(gray, 1.4, 4)
-        for (x, y, w, h) in faces:
-            num_of_faces = num_of_faces + 1
-            cv2.rectangle(Detect.img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+    def scan_image(self, connection):
+        try:
+            print("Opening camera..")
+            cap = cv2.VideoCapture(0)
+            num_of_faces = 0
 
-        cv2.imshow('img', Detect.img)
-        cv2.waitKey(0)
+            while Detect.connected:
+                _, img = cap.read()
+                gray = cv2.cvtColor(Detect.img, cv2.COLOR_BGR2GRAY)
+                faces = Detect.face_cascade.detectMultiScale(gray, 1.4, 4)
+                for (x, y, w, h) in faces:
+                    num_of_faces = num_of_faces + 1
+                    cv2.rectangle(Detect.img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-        print("Number of faces found: " + str(num_of_faces))
+                cv2.imshow('img', img)
+                if num_of_faces > 0:
+                    Detect.isActive = True
+                else:
+                    Detect.isActive = False
+                k = cv2.waitKey(30) & 0xff
+                if k==27:
+                    break
+
+        except:
+            print("Failure to open camera..")
+
+        #print("Number of faces found: " + str(num_of_faces))
 
     @staticmethod
     def end_program():

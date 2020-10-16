@@ -10,15 +10,15 @@ from database import Database
 username = None
 password = None
 classroomId = None
-is_connected = False
-is_teacher = False
 
+is_teacher = False
 
 def begin():
     global is_teacher
     global username
     global password
     global classroomId
+    is_connected = False
 
     ask_is_teacher = raw_input("Enter 'T' for teacher.")
     if ask_is_teacher == "T":
@@ -34,26 +34,36 @@ def begin():
     print("Working..")
     if not is_teacher:
         classroomId = raw_input("Please enter the classroom code: ")
-        connection = Database()
+        connection = Database(username)
         isvalid = connection.create_new_userconnection(username, classroomId, 0)
 
         if not isvalid:
             print("invalid response")
             while not isvalid: # if entered classroomID is not valid keep asking for the correct one
                 classroomId = raw_input("Please enter the classroom code: ")
-                connection = Database()
+                connection = Database(username)
                 isvalid = connection.create_new_userconnection(username, classroomId, 0)
                 if isvalid:
                     break
 
-        #face_detect = Detect(username).scan_image() #run this loop
-        ##then sendDataToTeachers()
+        is_connected = True
+        face_detect = Detect(username)
+        face_detect.scan_image(connection)#run this loop
+
+        def active_loop(threadname, delay):
+            while is_connected:
+                print("detected face: " + str(face_detect.isActive))
+                connection.active_status(face_detect.isActive)
+                time.sleep(delay)
+
+        thread.start_new_thread(active_loop, ("Active-Thread", 5, ))
         if raw_input("Enter 'disconnect' to end session"):
             print("disconnected")
             connection.leave_classroom(username)
+            face_detect.connected = False
     else:
         classroomId = raw_input("Please enter a classroom code: ")
-        connection = Database()
+        connection = Database(username)
         connection.create_new_userconnection(username, classroomId, 1)
         is_connected = True
 
