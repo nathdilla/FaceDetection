@@ -1,6 +1,8 @@
 import sys
 import time
-import thread
+from concurrent.futures import thread
+
+from pip._vendor.distlib.compat import raw_input
 
 sys.path.append(".")
 

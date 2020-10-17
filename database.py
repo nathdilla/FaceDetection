@@ -15,7 +15,7 @@ class Database:
             database="meetings"
         )
 
-        print(Database.mydb)
+        print(Database.mydb) #error starts here
         Database.username = username
         return
 

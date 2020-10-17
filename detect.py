@@ -1,6 +1,8 @@
 import cv2
-import thread
+from concurrent.futures import thread
 import time
+
+from pip._vendor.distlib.compat import raw_input
 
 
 class Detect:
