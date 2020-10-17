@@ -7,7 +7,7 @@ from pip._vendor.distlib.compat import raw_input
 
 class Detect:
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    img = cv2.imread('teens.jpg')
+    #img = cv2.imread('teens.jpg')
 
     username = None
 
@@ -27,11 +27,11 @@ class Detect:
 
             while Detect.connected:
                 _, img = cap.read()
-                gray = cv2.cvtColor(Detect.img, cv2.COLOR_BGR2GRAY)
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 faces = Detect.face_cascade.detectMultiScale(gray, 1.4, 4)
                 for (x, y, w, h) in faces:
                     num_of_faces = num_of_faces + 1
-                    cv2.rectangle(Detect.img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                    cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
                 cv2.imshow('img', img)
                 if num_of_faces > 0:
