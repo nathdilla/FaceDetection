@@ -1,6 +1,5 @@
 import mysql.connector
 
-
 class Database:
     meetingID = None
     mydb = None
@@ -9,10 +8,10 @@ class Database:
 
     def __init__(self, username):
         Database.mydb = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            passwd="somesecurepassword",
-            database="meetings"
+            host="sql3.freemysqlhosting.net",
+            user="sql3371324",
+            passwd="MYzjy1HWKV",
+            database="sql3371324"
         )
 
         print(Database.mydb) #error starts here
