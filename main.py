@@ -1,6 +1,7 @@
 import sys
 import time
-from concurrent.futures import thread
+import concurrent.futures
+import _thread
 
 from pip._vendor.distlib.compat import raw_input
 
@@ -58,7 +59,7 @@ def begin():
                 connection.active_status(face_detect.isActive)
                 time.sleep(delay)
 
-        thread.start_new_thread(active_loop, ("Active-Thread", 5, ))
+        _thread.start_new_thread(active_loop, ("Active-Thread", 5, ))
         if raw_input("Enter 'disconnect' to end session"):
             print("disconnected")
             connection.leave_classroom(username)
@@ -76,12 +77,10 @@ def begin():
 
             print("loop closed")
 
-        thread.start_new_thread(update_loop, ("Thread-1", 1, ))
+        _thread.start_new_thread(update_loop, ("Thread-1", 1, ))
 
         if raw_input("Enter 'disconnect' to end session"):
             is_connected = False
             print("disconnected")
             connection.end_classroom(classroomId)
-
-
 begin()
