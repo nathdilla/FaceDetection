@@ -64,5 +64,11 @@ class Database:
         Database.mydb.commit()
 
     def active_status(self, status):
-        return
+        mycursor = Database.mydb.cursor()
+        sql = "UPDATE users SET isActive = %s WHERE username = %s"
+        if status:
+            mycursor.execute(sql, (1, Database.username))
+        else:
+            mycursor.execute(sql, (0, Database.username))
+        Database.mydb.commit()
                 #  set username status to status
